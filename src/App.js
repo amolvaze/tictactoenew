@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Square from "./components/square";
+import Board from "./components/board";
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <h1>
         <center>Tic Tac Toe Game</center>
       </h1>
-      <Square sq={1} index={1} />
+      <Board values={[1, 2, 3]} />
     </>
   );
 }

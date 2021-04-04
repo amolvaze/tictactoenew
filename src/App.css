@@ -39,3 +39,11 @@ body {
   align-items: center;
   margin: auto;
 }
+
+.board{
+    width: 31rem;
+    height: 30 rem;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
