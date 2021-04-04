@@ -2,6 +2,7 @@ import React from "react";
 import Square from "./square";
 
 const Board = ({ squareClicked, values }) => {
+  
   return (
     <div className="board">
       {values.map((sq, index) => {

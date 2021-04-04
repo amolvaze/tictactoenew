@@ -47,3 +47,18 @@ body {
     display: flex;
     flex-wrap: wrap;
 }
+
+.resetbtn {
+  color: white;
+  background-color:#8E2DD5;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 50px;
+  border: none;
+}
+
+.resetbtn:hover {
+    background-color: white;
+    font-weight: bold;
+    color: #8E2DD5;
+}
