@@ -4,7 +4,6 @@ import Board from "./board";
 const Game = () => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
   const [playerturn, setPlayerTurn] = useState("X");
-  const [gameEnded, setGameEnded] = useState(false);
 
   const showAlert = (message, className) => {
     const div = document.createElement("div");
@@ -16,7 +15,7 @@ const Game = () => {
 
     setTimeout(() => document.querySelector(".alert").remove(), 1000);
   };
-  const checkWinner = () => {
+  const isGameEnded = () => {
     let winning_combos = [
       [0, 1, 2], // rows
       [3, 4, 5],
@@ -39,18 +38,10 @@ const Game = () => {
         board[p2] === board[p3]
       ) {
         showAlert(`winner! player ${playerturn} has won the game! `, "success");
-        setGameEnded(true);
-        
-        return;
+        resetGame();
+        return true;
       }
     }
-  };
-  const squareClicked = (index) => {
-    let pturn = playerturn;
-    let b = board;
-    board[index] = pturn;
-    localStorage.setItem("boardvalue", JSON.stringify([...board, board]));
-    checkWinner();
 
     let counter = 0;
     for (let i = 0; i < board.length; i++) {
@@ -60,29 +51,34 @@ const Game = () => {
     }
 
     if (board.length === counter) {
-      setGameEnded(true);
       showAlert("No one has won the game! ", "danger");
+      return true;
     }
 
+    return false;
+  };
+  const squareClicked = (index) => {
+    let pturn = playerturn;
+    let b = board;
+    board[index] = pturn;
+    localStorage.setItem("boardvalue", JSON.stringify([...board, board]));
     pturn = pturn === "X" ? "0" : "X";
     setPlayerTurn(pturn);
     setBoard(b);
+    isGameEnded();
+  };
+
+  const resetGame = () => {
+    setPlayerTurn("X");
+    setBoard(["", "", "", "", "", "", "", "", ""]);
+    localStorage.removeItem("boardvalue");
   };
 
   return (
     <div className="container">
-      <button
-        className="resetbtn"
-        // disabled={!gameEnded}
-        onClick={() => {
-          setPlayerTurn("X");
-          setBoard(["", "", "", "", "", "", "", "", ""]);
-          setGameEnded(false);
-          localStorage.removeItem("boardvalue");
-        }}
-      >
-        ResetGame
-      </button>{" "}
+      <button className="resetbtn" onClick={resetGame}>
+        Reset Game
+      </button>
       <br /> <br />
       <Board squareClicked={squareClicked} values={board} />
     </div>
