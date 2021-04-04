@@ -1,20 +1,11 @@
 import React, { useState } from "react";
 import Board from "./board";
+import Alert from "./alert";
 
 const Game = () => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
   const [playerturn, setPlayerTurn] = useState("X");
 
-  const showAlert = (message, className) => {
-    const div = document.createElement("div");
-    div.className = `alert alert-${className}`;
-    div.appendChild(document.createTextNode(message));
-    const container = document.querySelector(".container");
-    const showmsg = document.querySelector("#showmsg");
-    container.insertBefore(div, showmsg);
-
-    setTimeout(() => document.querySelector(".alert").remove(), 1000);
-  };
   const isGameEnded = () => {
     let winning_combos = [
       [0, 1, 2], // rows
@@ -37,7 +28,7 @@ const Game = () => {
         board[p1] === board[p2] &&
         board[p2] === board[p3]
       ) {
-        showAlert(`winner! player ${playerturn} has won the game! `, "success");
+        Alert(`winner! player ${playerturn} has won the game! `, "success");
         resetGame();
         return true;
       }
@@ -51,7 +42,7 @@ const Game = () => {
     }
 
     if (board.length === counter) {
-      showAlert("No one has won the game! ", "danger");
+      Alert("No one has won the game! ", "danger");
       return true;
     }
 
