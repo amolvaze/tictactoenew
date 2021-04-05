@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Board from "./board";
 import Alert from "./alert";
 
 const Game = () => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
   const [playerturn, setPlayerTurn] = useState("X");
+
+  useEffect(() => {
+    const boardItems = JSON.parse(localStorage.getItem("boardvalue"));
+    if (boardItems) {
+      for (let x in boardItems) {
+        setBoard(boardItems[x]);
+      }
+    }
+  }, []);
 
   const isGameEnded = () => {
     let winning_combos = [
